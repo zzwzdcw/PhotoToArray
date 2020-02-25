@@ -161,23 +161,38 @@ void toArray(Mat img) {
     int Maxbit = GetMaxBit(img);        //行数/8
     int bit = 0;
     os << Array;
+
+    int option = 0;//            数值为1时图片黑色部分是黑色
+                    //           数值为0时图片黑色部分是白色
+                    //很重要的参数！！！！
     for (int y = 0; y < img.rows; y++)//从上到下
     {
 
         for (int x = 0; x < img.cols; x++)
         {
-            //图片黑色部分是黑色
+            if (option == 1) {
+                if (img.at<uchar>(y, x) > Value)      //(img.at<uchar>(rows, cols)
+                {
+                    temp = '0';      //0为灯灭
+                }
+                else
+                {
 
-            if (img.at<uchar>(y, x) > Value)      //(img.at<uchar>(rows, cols)
-            {
-                temp = '0';      //0为灯灭
+                    temp = '1';       //1位灯亮
+                }
             }
             else
             {
+                if (img.at<uchar>(y, x) > Value)      //(img.at<uchar>(rows, cols)
+                {
+                    temp = '1';     
+                }
+                else
+                {
 
-                temp = '1';       //1位灯亮
+                    temp = '0';       
+                }
             }
-
             temp8Bit = temp8Bit + temp;             //把0 1 的数暂存到temp16bit中；
             i++;
 
@@ -210,7 +225,6 @@ void toArray(Mat img) {
     os << end;
     os.close();
 }
-
 
 
 int main()
