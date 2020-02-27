@@ -1,6 +1,5 @@
 ﻿// 图片最大像素宽度应限制在128以内；否则修改       temp16bit的数组上限
 // 本程序用于ssd1306 128*64 oled显示器
-// 
 #include <opencv2/core.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
@@ -15,7 +14,7 @@ using namespace std;
 using namespace cv;
 
 //double maxValue = 150;  //局部二值化阈值
-double Value = 128;     //全局二值化阈值
+int Value = 128;     //全局二值化阈值
 
 ofstream os;     //创建一个文件输出流对象
 //灰度图函数
@@ -232,6 +231,8 @@ int main()
     os.open("array.txt");//将对象与文件关联
     Mat img = imread("text64_64.jpg");//读取图片
     Mat GrayscaleImg = Grayscale(img);//得到灰度图
+    cout << "请输入二值化的阈值范围在0-255" << endl;
+    cin >> Value;
     Mat BinarizeImg = Binarize(GrayscaleImg, Value);//二值化
     Mat flip_horizontal_img;
     namedWindow("显示原始图片", 0);//可变大小窗口
